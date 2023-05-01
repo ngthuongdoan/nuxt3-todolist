@@ -15,12 +15,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue"
-import { faker } from "@faker-js/faker"
 import { Tab, Todo } from "~/@types"
-
 export default defineComponent({
 	name: "IndexPage",
-	setup() {
+	async setup() {
 		const tabs: Array<Tab> = [
 			{
 				name: "Todo",
@@ -32,22 +30,25 @@ export default defineComponent({
 			},
 		]
 
-		const todos: Array<Todo> = []
-		for (let i = 0; i < 10; i++) {
-			const todo: Todo = {
-				id: faker.datatype.uuid(),
-				title: faker.lorem.words(),
-				description: faker.lorem.sentence(),
-				completed: faker.datatype.boolean(),
-				author: faker.name.fullName(),
-				dueDate: faker.date.future(),
+		const query = gql`
+			{
+				todo {
+					id
+					title
+					dueDate
+					author
+					completed
+					description
+				}
 			}
-			todos.push(todo)
-		}
+		`
+		const {
+			data: { value },
+		} = await useAsyncQuery(query)
 
 		return {
 			tabs,
-			todos,
+			todos: (value as any).todo || [],
 		}
 	},
 })

@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
+    "@nuxtjs/apollo": "^5.0.0-alpha.6",
     "@nuxtjs/tailwindcss": "^6.6.7",
     "@types/node": "^18",
     "nuxt": "^3.4.3"
